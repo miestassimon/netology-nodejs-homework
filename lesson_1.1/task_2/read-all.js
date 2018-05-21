@@ -8,10 +8,13 @@ module.exports = readAll = (path) => {
       if (err) {
         fail(err);
       } else {
-        files.forEach((file, index) => {
-          allFiles.push({name: file, content: fs.readFileSync(path + file, conf, (err) => {
-            if (err) fail(err);
-          })});
+        files.forEach((file) => {
+          allFiles.push({
+            name: file,
+            content: fs.readFileSync(path + file, conf, (err) => {
+              if (err) fail(err);
+            }),
+          });
         });
         done(allFiles);
       }
