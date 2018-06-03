@@ -6,6 +6,10 @@ const PORT = 3000;
 
 app.use(bp.json());
 
+let checkHeader = (req, res, next) => {
+  return req.is('application/json') ? true : false;
+};
+
 
 app.get('/', (req, res) => {
   res.send('Hello, Express.js');
@@ -24,9 +28,15 @@ app.all('/sub\*', (req, res) => {
 });
 
 app.post('/post', (req, res) => {
-  console.log();
   if (Object.keys(req.body).length !== 0) {
-    res.send(req.body);
+
+    if (checkHeader(req) === false) {
+      res.status(401);
+      res.send();
+    } else {
+      res.send(req.body);
+    }
+
   } else {
     res.status(404);
     res.send('404 Not Found');
